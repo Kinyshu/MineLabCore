@@ -1,0 +1,4 @@
+name: MineLabCore
+version: '1.02'
+main: com.kinyshu.minelabcore.main.MineLabCore
+api-version: '1.21'
