@@ -1,9 +1,14 @@
 package com.kinyshu.minelabcore.api.command.abstracts;
 
-import com.kinyshu.minelabcore.api.command.argument.CommandArgument;
+import com.kinyshu.minelabcore.api.command.argument.ExecuteArgument;
+import com.kinyshu.minelabcore.api.command.argument.TabCompleteArgument;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 /**
  * Класс AbstractCommandExecutor
@@ -45,15 +50,26 @@ public abstract class AbstractCommandExecutor extends Command {
      */
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, String[] args) {
-        return onCommandExecuted(new CommandArgument(sender, commandLabel, args));
+        return onCommandExecuted(new ExecuteArgument(sender, commandLabel, args));
+    }
+
+    @Override
+    @NotNull
+    public List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, @NotNull String[] args) throws IllegalArgumentException {
+        return onTabCompleteEvent(new TabCompleteArgument(sender, alias, args));
     }
 
     /**
-     * Функция execute
+     * Функция onCommandExecuted
      *
      * @param commandArgument Объект аргументов команды
-     *
-     * @Override
      */
-    public abstract boolean onCommandExecuted(CommandArgument commandArgument);
+    public abstract boolean onCommandExecuted(ExecuteArgument commandArgument);
+
+    /**
+     * Функция onTabCompleteEvent
+     *
+     * @param tabCompleteArgument Объект аргументов tabComplete
+     */
+    public abstract List<String> onTabCompleteEvent(TabCompleteArgument tabCompleteArgument);
 }

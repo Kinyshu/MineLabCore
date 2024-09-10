@@ -5,6 +5,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 
+/**
+ * Класс реализующий абстрактную модель YAML конфигурации
+ */
 public abstract class AbstractConfiguration {
 
     // Указатель на объект JavaPlugin

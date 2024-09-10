@@ -13,7 +13,7 @@ import java.util.List;
  * Класс может принимать в конструктор
  * объект JavaPlugin, и может быть пустым
  * если конструктор пуст JavaPlugin
- * инизиализирует класс CommandRegistrar
+ * инициализирует класс CommandRegistrar
  */
 public abstract class AbstractCommand {
 

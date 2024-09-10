@@ -43,9 +43,7 @@ public class ConfigurationHandler extends AbstractConfiguration {
 
     @Override
     public boolean reload() {
-
         try {
-
             this.setFile(new File(this.getFilePath()));
             if (!this.getFile().exists()) {
                 if (!this.findDefaultConfiguration()) {

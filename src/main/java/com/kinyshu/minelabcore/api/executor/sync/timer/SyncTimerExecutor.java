@@ -1,8 +1,6 @@
 package com.kinyshu.minelabcore.api.executor.sync.timer;
 
 import com.kinyshu.minelabcore.api.executor.abstracts.AbstractCodeExecutor;
-import com.kinyshu.minelabcore.api.executor.abstracts.AbstractCodeTask;
-import com.kinyshu.minelabcore.api.executor.async.AsyncTask;
 import com.kinyshu.minelabcore.api.executor.sync.SyncTask;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;

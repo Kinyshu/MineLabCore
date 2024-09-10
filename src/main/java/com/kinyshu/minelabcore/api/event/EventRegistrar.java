@@ -6,8 +6,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Регистрирует события, сохраняет их в список
+ */
 public class EventRegistrar {
 
+    // Указатель на объект JavaPlugin указанного плагина
     private JavaPlugin javaPlugin;
     private List<ExtendedEventHandler> registeredEvents;
 
@@ -24,14 +28,32 @@ public class EventRegistrar {
         this.javaPlugin = javaPlugin;
     }
 
-    public void registerEvent(ExtendedEventHandler abstractEventHandler) {
+    /**
+     * Функция registerEvent
+     * регистрирует события на сервере
+     *
+     * @param eventHandler объект обработчика событий
+     */
+    public void registerEvent(ExtendedEventHandler eventHandler) {
 
-        if (abstractEventHandler.getJavaPlugin() == null) {
-            abstractEventHandler.setJavaPlugin(this.getJavaPlugin());
+        if (eventHandler.getJavaPlugin() == null) {
+            eventHandler.setJavaPlugin(this.getJavaPlugin());
         }
 
-        this.getRegisteredEvents().add(abstractEventHandler);
-        this.getJavaPlugin().getServer().getPluginManager().registerEvents(abstractEventHandler, abstractEventHandler.getJavaPlugin());
+        this.getRegisteredEvents().add(eventHandler);
+        this.getJavaPlugin().getServer().getPluginManager().registerEvents(eventHandler, eventHandler.getJavaPlugin());
+    }
+
+    public void registerEvents(List<ExtendedEventHandler> eventHandlers) {
+
+        eventHandlers.forEach(eventHandler -> {
+            if (eventHandler.getJavaPlugin() == null) {
+                eventHandler.setJavaPlugin(this.getJavaPlugin());
+            }
+
+            this.getRegisteredEvents().add(eventHandler);
+            this.getJavaPlugin().getServer().getPluginManager().registerEvents(eventHandler, eventHandler.getJavaPlugin());
+        });
     }
 
     public List<ExtendedEventHandler> getRegisteredEvents() {

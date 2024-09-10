@@ -3,6 +3,9 @@ package com.kinyshu.minelabcore.api.executor.sync;
 import com.kinyshu.minelabcore.api.executor.abstracts.AbstractCodeTask;
 import org.bukkit.scheduler.BukkitTask;
 
+/**
+ * Синхронная задача
+ */
 public class SyncTask extends AbstractCodeTask {
 
     private BukkitTask bukkitTask;

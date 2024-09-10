@@ -1,7 +1,6 @@
 plugins {
     id 'java'
     id "io.github.goooler.shadow" version "8.1.8"
-    //id 'org.jetbrains.kotlin.jvm'
 }
 
 group = 'com.kinyshu'
@@ -22,20 +21,8 @@ repositories {
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
 
-    implementation('org.projectlombok:lombok:1.18.34')
-    annotationProcessor 'org.projectlombok:lombok:1.18.34'
-
-    testCompileOnly 'org.projectlombok:lombok:1.18.34'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.34'
-
     implementation 'com.zaxxer:HikariCP:5.0.1'
-    implementation files('libs/storm-1.2.8.jar')
-}
-
-shadowJar {
-    relocate 'com.zaxxer.HikariCP', 'com.zaxxer.HikariCP'
-    relocate 'org.projectlombok.lombok', 'org.projectlombok.lombok'
-    relocate 'com.craftmend.storm', 'com.craftmend.storm'
+    implementation files('libraries/storm-1.2.8.jar')
 }
 
 def targetJavaVersion = 21
@@ -63,14 +50,22 @@ processResources {
     }
 }
 
-task CopyPlugin() {
-    doLast {
-        copy {
-            from "build/libs/MineLabCore-1.02-all.jar"
-            into "E:/Minecraft/Server/TestServer/plugins"
-        }
+shadowJar {
+    relocate 'com.zaxxer.HikariCP', 'com.zaxxer.HikariCP'
+    relocate 'com.craftmend.storm', 'com.craftmend.storm'
+}
+
+tasks.register('moveLibraries') {
+    ant.copy(file: 'build/libs/MineLabCore-' + version + '-all.jar', tofile: 'build/libs/MineLabCore-Release.jar')
+
+    copy {
+        from "build/libs/MineLabCore-Release.jar"
+        into "E:/Minecraft/Server/TestServer/plugins"
+    }
+    copy {
+        from "build/libs/MineLabCore-Release.jar"
+        into "C:\\Users\\Kinyshu\\IdeaProjects\\Accounts\\libraries"
     }
 }
 
 build.finalizedBy shadowJar
-build.finalizedBy CopyPlugin

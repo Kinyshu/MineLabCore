@@ -2,9 +2,12 @@ package com.kinyshu.minelabcore.api.event.handler;
 
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-
+/**
+ * Расширенный обработчик событий наследуется Listener
+ */
 public class ExtendedEventHandler implements Listener {
 
+    // Указатель на объект JavaPlugin указанного плагина
     private JavaPlugin javaPlugin;
 
     public ExtendedEventHandler()

@@ -3,6 +3,7 @@ package com.kinyshu.minelabcore.api.logger;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+
 public class MlcLogger {
 
     private JavaPlugin javaPlugin;

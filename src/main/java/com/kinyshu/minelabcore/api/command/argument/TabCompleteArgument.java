@@ -3,18 +3,12 @@ package com.kinyshu.minelabcore.api.command.argument;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * Класс CommandArgument
- * ~
- * Класс аргумента команды, создан для удобства
- */
-public class CommandArgument {
-
+public class TabCompleteArgument {
     private CommandSender sender;
     private String alias;
     private String[] arguments;
 
-    public CommandArgument(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
+    public TabCompleteArgument(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
         this.setSender(sender);
         this.setAlias(commandLabel);
         this.setArguments(args);

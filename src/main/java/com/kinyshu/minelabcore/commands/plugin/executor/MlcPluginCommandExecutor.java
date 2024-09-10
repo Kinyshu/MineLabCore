@@ -1,23 +1,18 @@
 package com.kinyshu.minelabcore.commands.plugin.executor;
 
 import com.kinyshu.minelabcore.api.command.abstracts.AbstractCommandExecutor;
-import com.kinyshu.minelabcore.api.command.argument.CommandArgument;
+import com.kinyshu.minelabcore.api.command.argument.ExecuteArgument;
+import com.kinyshu.minelabcore.api.command.argument.TabCompleteArgument;
 import com.kinyshu.minelabcore.api.core.MlcApi;
 import com.kinyshu.minelabcore.api.executor.CodeExecutor;
 import com.kinyshu.minelabcore.commands.plugin.MlcPluginCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import java.io.File;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.function.BiConsumer;
+import java.util.List;
 
 public class MlcPluginCommandExecutor extends AbstractCommandExecutor {
 
@@ -29,7 +24,7 @@ public class MlcPluginCommandExecutor extends AbstractCommandExecutor {
     }
 
     @Override
-    public boolean onCommandExecuted(CommandArgument commandArgument) {
+    public boolean onCommandExecuted(ExecuteArgument commandArgument) {
 
         this.getExecutor().getAsyncExecutor().execute(() -> {
 
@@ -39,7 +34,7 @@ public class MlcPluginCommandExecutor extends AbstractCommandExecutor {
             if (sender.isOp() || sender.hasPermission("mlc.core")) {
 
                 if (arguments.length == 0) {
-                    arguments = new String[] { "help" };
+                    arguments = new String[]{"help"};
                 }
 
                 switch (arguments[0].toLowerCase()) {
@@ -49,7 +44,8 @@ public class MlcPluginCommandExecutor extends AbstractCommandExecutor {
                             boolean status = MlcApi.getApi().getPlugins().getPluginsManager().loadPlugin(arguments[1] + ".jar");
                             sender.sendMessage("§f[§aИнформация§f] §7Статус загрузки плагина " + arguments[1] + ": §9" + Boolean.toString(status));
                         }
-                    } break;
+                    }
+                    break;
 
                     case "unload": {
                         if (arguments.length == 2) {
@@ -61,7 +57,8 @@ public class MlcPluginCommandExecutor extends AbstractCommandExecutor {
                             boolean status = MlcApi.getApi().getPlugins().getPluginsManager().unloadPlugin(plugin);
                             sender.sendMessage("§f[§aИнформация§f] §7Статус выгрузки плагина: §9" + Boolean.toString(status));
                         }
-                    } break;
+                    }
+                    break;
 
                     case "reload": {
                         if (arguments.length == 2) {
@@ -78,7 +75,8 @@ public class MlcPluginCommandExecutor extends AbstractCommandExecutor {
                                 sender.sendMessage("§f[§cОшибка§f] §7Плагин не перезапущен");
                             }
                         }
-                    } break;
+                    }
+                    break;
 
                     case "enable": {
                         if (arguments.length == 2) {
@@ -89,9 +87,10 @@ public class MlcPluginCommandExecutor extends AbstractCommandExecutor {
                             }
 
                             boolean status = MlcApi.getApi().getPlugins().getPluginsManager().enablePlugin(plugin);
-                            sender.sendMessage("§f[§aИнформация§f] §7Статус включения плагина: §9" + Boolean.toString(status));
+                            sender.sendMessage("§f[§aИнформация§f] §7Статус включения плагина: §9" + status);
                         }
-                    } break;
+                    }
+                    break;
 
                     case "disable": {
                         if (arguments.length == 2) {
@@ -101,9 +100,10 @@ public class MlcPluginCommandExecutor extends AbstractCommandExecutor {
                             }
 
                             boolean status = MlcApi.getApi().getPlugins().getPluginsManager().disablePlugin(plugin);
-                            sender.sendMessage("§f[§aИнформация§f] §7Статус выключения плагина: §9" + Boolean.toString(status));
+                            sender.sendMessage("§f[§aИнформация§f] §7Статус выключения плагина: §9" + status);
                         }
-                    } break;
+                    }
+                    break;
 
                     case "list": {
 
@@ -115,7 +115,8 @@ public class MlcPluginCommandExecutor extends AbstractCommandExecutor {
                                 sender.sendMessage("§f[§aИнформация§f] §7Плагин: " + isEnabled + value.getName() + "§7, \tверсия: §9" + value.getPluginMeta().getVersion());
                             });
                         }
-                    } break;
+                    }
+                    break;
 
                     case "pl":
                     case "plugins": {
@@ -125,7 +126,8 @@ public class MlcPluginCommandExecutor extends AbstractCommandExecutor {
                             String isEnabled = plugin.isEnabled() ? "§a" : "§c";
                             sender.sendMessage("§f[§aИнформация§f] §7Плагин: " + isEnabled + plugin.getName() + "§7, \tверсия: §9" + plugin.getPluginMeta().getVersion());
                         }
-                    } break;
+                    }
+                    break;
 
                     case "dc":
                     case "deletecommand": {
@@ -144,7 +146,8 @@ public class MlcPluginCommandExecutor extends AbstractCommandExecutor {
                         } else {
                             sender.sendMessage("§f[§cОшибка§f] §7Команды §9" + arguments[1] + "§7, не существует");
                         }
-                    } break;
+                    }
+                    break;
 
                     case "rc":
                     case "restorecommand": {
@@ -161,7 +164,8 @@ public class MlcPluginCommandExecutor extends AbstractCommandExecutor {
                         } else {
                             sender.sendMessage("§f[§cОшибка§f] §7Команды §9" + arguments[1] + "§7, не существует");
                         }
-                    } break;
+                    }
+                    break;
 
                     default:
                         sender.sendMessage("§f[§aИнформация§f] §7Список команд MineLabCorePlugins");
@@ -176,9 +180,53 @@ public class MlcPluginCommandExecutor extends AbstractCommandExecutor {
                         sender.sendMessage("§f[§aИнформация§f] §7- /mlcp restorecommand     <CommandName>   // Восстанавливает указанную команду");
                         break;
                 }
+            } else {
+                sender.sendMessage("§f[§aИнформация§f] §fНедостаточно прав.");
             }
         });
         return true;
+    }
+
+    @Override
+    public List<String> onTabCompleteEvent(TabCompleteArgument tabCompleteArgument) {
+
+        var arguments = tabCompleteArgument.getArguments();
+        var alias = tabCompleteArgument.getAlias();
+        var sender = tabCompleteArgument.getSender();
+
+        if (sender.isOp() || sender.hasPermission("mlc.core")) {
+            if (arguments.length == 1) {
+                return List.of("load", "unload", "reload", "enable", "disable", "list", "plugins", "deletecommand", "restorecommand");
+            } else if (arguments.length == 2 && (arguments[0].equalsIgnoreCase("unload")
+                    || arguments[0].equalsIgnoreCase("reload")
+                    || arguments[0].equalsIgnoreCase("enable")
+                    || arguments[0].equalsIgnoreCase("disable"))) {
+
+                var plugins = Bukkit.getPluginManager().getPlugins();
+                List<String> list = new ArrayList<>();
+
+                for (Plugin plugin : plugins) {
+                    list.add(plugin.getName());
+                }
+
+                return list;
+            } else if (arguments.length == 2 && (arguments[0].equalsIgnoreCase("deletecommand") || arguments[0].equalsIgnoreCase("dc"))) {
+
+                var knownCommands = Bukkit.getServer().getCommandMap().getKnownCommands();
+                List<String> list = new ArrayList<>();
+
+                for (Command command : knownCommands.values()) {
+                    list.add(command.getName());
+                }
+
+                return list;
+            } else if (arguments.length == 2 && (arguments[0].equalsIgnoreCase("restorecommand") || arguments[0].equalsIgnoreCase("rc"))) {
+
+                return MlcApi.getApi().getPlugin().getConfig().getStringList("deleted-commands");
+            }
+        }
+
+        return List.of("У вас недостаточно прав!");
     }
 
     public CodeExecutor getExecutor() {

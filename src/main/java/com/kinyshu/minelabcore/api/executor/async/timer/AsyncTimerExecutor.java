@@ -25,17 +25,17 @@ public class AsyncTimerExecutor extends AbstractCodeExecutor {
 
     public AsyncTask executeEndless(@NotNull Runnable runnable, long waitTime) {
         return this.execute(() -> {
+            while (true) {
+                runnable.run();
 
-            runnable.run();
-
-            try {
-                synchronized (Thread.currentThread()) {
-                    Thread.currentThread().wait(waitTime);
-                };
-            }
-            catch (InterruptedException exception) {
-                exception.printStackTrace();
-                Thread.currentThread().interrupt();
+                try {
+                    synchronized (Thread.currentThread()) {
+                        Thread.currentThread().wait(waitTime);
+                    }
+                } catch (InterruptedException exception) {
+                    exception.printStackTrace();
+                    Thread.currentThread().interrupt();
+                }
             }
         });
     }

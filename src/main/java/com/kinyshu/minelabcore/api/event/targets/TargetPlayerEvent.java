@@ -4,6 +4,9 @@ import com.kinyshu.minelabcore.api.event.handler.ExtendedEventHandler;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * Обрабатывает события на указанный объект игрока
+ */
 public class TargetPlayerEvent extends ExtendedEventHandler {
 
     private Player player;

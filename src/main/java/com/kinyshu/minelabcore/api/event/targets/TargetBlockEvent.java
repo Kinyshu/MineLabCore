@@ -4,6 +4,9 @@ import com.kinyshu.minelabcore.api.event.handler.ExtendedEventHandler;
 import org.bukkit.block.Block;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * Обрабатывает события на указанный объект блока
+ */
 public class TargetBlockEvent extends ExtendedEventHandler {
 
     private Block block;

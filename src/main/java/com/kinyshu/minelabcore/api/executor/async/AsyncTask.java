@@ -5,6 +5,7 @@ import com.kinyshu.minelabcore.api.executor.abstracts.AbstractCodeTask;
 public class AsyncTask extends AbstractCodeTask {
 
     private Thread thread;
+    private Object object;
 
     public AsyncTask()
     {
@@ -20,5 +21,13 @@ public class AsyncTask extends AbstractCodeTask {
 
     public void setThread(Thread thread) {
         this.thread = thread;
+    }
+
+    public Object getObject() {
+        return object;
+    }
+
+    public void setObject(Object object) {
+        this.object = object;
     }
 }

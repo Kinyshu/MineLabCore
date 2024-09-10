@@ -1,12 +1,15 @@
 package test.kinyshu.command;
 
 import com.kinyshu.minelabcore.api.command.abstracts.AbstractCommandExecutor;
-import com.kinyshu.minelabcore.api.command.argument.CommandArgument;
+import com.kinyshu.minelabcore.api.command.argument.ExecuteArgument;
+import com.kinyshu.minelabcore.api.command.argument.TabCompleteArgument;
 import com.kinyshu.minelabcore.api.executor.CodeExecutor;
 import com.kinyshu.minelabcore.api.executor.async.AsyncExecutor;
 import com.kinyshu.minelabcore.api.executor.sync.SyncExecutor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 public class TestCommandExecutor extends AbstractCommandExecutor {
 
@@ -22,7 +25,7 @@ public class TestCommandExecutor extends AbstractCommandExecutor {
     }
 
     @Override
-    public boolean onCommandExecuted(CommandArgument commandArgument) {
+    public boolean onCommandExecuted(ExecuteArgument commandArgument) {
 
         this.getAsyncExecutor().execute(() -> {
             if (commandArgument.getSender() instanceof Player player) {
@@ -31,6 +34,11 @@ public class TestCommandExecutor extends AbstractCommandExecutor {
         });
 
         return true;
+    }
+
+    @Override
+    public List<String> onTabCompleteEvent(TabCompleteArgument tabCompleteArgument) {
+        return List.of();
     }
 
     public CodeExecutor getCodeExecutor() {
