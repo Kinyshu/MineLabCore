@@ -1,7 +1,0 @@
-name: "MineLabCore"
-version: '1.02'
-
-deleted-commands:
-  - "version"
-  - "spigot"
-  - "bukkit"
